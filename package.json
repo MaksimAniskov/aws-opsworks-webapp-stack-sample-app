@@ -1,0 +1,13 @@
+{
+  "name": "nodejs-express-hello-world",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MaksimAniskov/aws-opsworks-webapp-stack/app"
+  },
+  "license": "MIT",
+  "description": "A sample Node.js/Express application"
+}
