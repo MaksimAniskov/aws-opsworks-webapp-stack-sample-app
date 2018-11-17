@@ -3,6 +3,8 @@ const port = process.env.PORT || 3000;
 const app = express();
 const http = require('http');
 
+const SLOWPOKE_TIME_INTERVAL_MSEC = 5000;
+
 app.get('/', (req, res) => {
   http.get('http://169.254.169.254/latest/meta-data/instance-id', resp => {
     let data = '';
@@ -19,6 +21,13 @@ app.get('/', (req, res) => {
     console.error(err.message);
     res.send(`Hello World! But I don't know my EC2 instance id because of ${err.message}`);
   });
+});
+
+app.get('/slowpoke', (req, res) => {
+  const t1  = (new Date()).getTime();
+  while ((new Date()).getTime() - t1 < SLOWPOKE_TIME_INTERVAL_MSEC) {
+  }
+  res.send(`Just has been burning CPU for ${SLOWPOKE_TIME_INTERVAL_MSEC}msec`);
 });
 
 app.listen(port, function() {
