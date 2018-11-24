@@ -3,7 +3,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 const http = require('http');
 
-const SLOWPOKE_TIME_INTERVAL_MSEC = 5000;
+const SLOWPOKE_TIME_INTERVAL_MSEC = 500;
 
 app.get('/', (req, res) => {
   http.get('http://169.254.169.254/latest/meta-data/instance-id', resp => {
@@ -24,12 +24,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/slowpoke', (req, res) => {
-  const t1  = (new Date()).getTime();
-  while ((new Date()).getTime() - t1 < SLOWPOKE_TIME_INTERVAL_MSEC) {
-  }
-  res.send(`Just has been burning CPU for ${SLOWPOKE_TIME_INTERVAL_MSEC}msec`);
+  slowpoke(SLOWPOKE_TIME_INTERVAL_MSEC, res);
+});
+
+app.get('/slowpoke/:interval_msec', (req, res) => {
+  slowpoke(parseInt(req.params['interval_msec']), res);
 });
 
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
+
+function slowpoke(interval_msec, res) {
+  const t1  = (new Date()).getTime();
+  while ((new Date()).getTime() - t1 < interval_msec) {
+  }
+  res.send(`Just has been burning CPU for ${interval_msec}msec`);
+}
