@@ -32,7 +32,7 @@ function createServer() {
       });
 
       resp.on('end', () => {
-        res.send(`Hello World! My EC2 instance id is ${data}, numCPUs=${numCPUs}`);
+        res.send(`Hello World! Version #2. My EC2 instance id is ${data}, numCPUs=${numCPUs}`);
       })
     })
       .on('error', err => {
